@@ -37,7 +37,6 @@ RUN apt-get update && apt-get install -y docker-ce-cli \
 
 VOLUME /sys/fs/cgroup
 VOLUME /var2/run
-VOLUME /iStorePanel
 WORKDIR /
 
 CMD ["/lib/systemd/systemd"]
