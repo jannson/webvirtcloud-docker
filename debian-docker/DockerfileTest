@@ -1,0 +1,20 @@
+FROM linkease/istorepanel:0.5
+
+ENV container docker
+ENV LC_ALL C
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Asia/Shanghai
+
+WORKDIR /app
+
+COPY ./reinstall.sh .
+COPY ./install.override.sh .
+COPY ./update_app_version.sh .
+
+VOLUME /sys/fs/cgroup
+VOLUME /var2/run
+VOLUME /iStorePanel
+WORKDIR /
+
+CMD ["/lib/systemd/systemd"]
+
