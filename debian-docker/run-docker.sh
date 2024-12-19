@@ -8,7 +8,7 @@ docker run --restart=unless-stopped -d \
   --privileged \
 	-v /sys/fs/cgroup:/sys/fs/cgroup \
   -v /var/run:/var2/run \
-  -v \"/mnt/nvme/dbconfig:/srv/webvirtcloud/dbconfig\" \
+  -v /mnt/nvme/dbconfig:/srv/webvirtcloud/dbconfig \
   -v /mnt:/mnt \
 	-e TZ=Asia/Shanghai \
   --dns=172.17.0.1 \
