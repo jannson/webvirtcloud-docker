@@ -7,11 +7,11 @@ docker run --restart=unless-stopped -d \
 	--network host \
 	-v /sys/fs/cgroup:/sys/fs/cgroup \
   -v /var/run:/var2/run \
-	-v /mnt:/mnt:rslave \
-	-v /mnt/nvme0n1-4/test/1panel:/iStorePanel \
+  -v \"/mnt/dbconfig:/srv/webvirtcloud/dbconfig\" \
+  -v /mnt:/mnt \
 	-e TZ=Asia/Shanghai \
   --dns=172.17.0.1 \
   --dns=223.5.5.5 \
-	--name iStorePanel linkease/istorepanel
+	--name webvirtcloud linkease/webvirttest:0.1
 
 #	--name istorePanel istorepanel:0.3
