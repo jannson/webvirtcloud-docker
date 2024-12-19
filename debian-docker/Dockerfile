@@ -11,7 +11,7 @@ COPY gpt.txt .
 COPY files/docker/systemctl3.py /usr/bin/systemctl
 
 RUN apt-get update \
-    && apt-get install -y systemd locales \
+    && apt-get install -y locales \
     && apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common \
     && apt-get install -y wget tar unzip zip curl git gnupg sudo sqlite3 tzdata procps \
     && locale-gen en_US.UTF-8 \
@@ -47,5 +47,5 @@ VOLUME /sys/fs/cgroup
 VOLUME /var2/run
 WORKDIR /
 
-CMD ["/lib/systemd/systemd"]
+CMD ["/usr/bin/systemctl"]
 
