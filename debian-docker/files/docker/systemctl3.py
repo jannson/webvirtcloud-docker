@@ -2286,6 +2286,9 @@ class Systemctl:
         if mode.noexpand:
             newcmd = self.split_cmd(exe)
         else:
+            #print("exe="+str(exe)+"\n env="+str(env)+"\n -------")
+            if "LIBVIRTD_ARGS" in env:
+                env["LIBVIRTD_ARGS"] = "--timeout 120"
             newcmd = self.expand_cmd(exe, env, conf)
         if mode.argv0:
             if len(newcmd) > 1:
