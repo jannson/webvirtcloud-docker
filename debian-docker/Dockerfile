@@ -10,7 +10,6 @@ WORKDIR /srv
 #COPY sources.list /etc/apt/sources.list
 #COPY gpt.txt .
 COPY files/docker/systemctl3.py /usr/bin/systemctl
-ADD ./webvirtcloud /srv/webvirtcloud
 
 #    && cat /app/gpt.txt | apt-key add - \
 RUN apt-get update \
@@ -43,6 +42,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ADD ./webvirtcloud /srv/webvirtcloud
 RUN /srv/webvirtcloud/manual-install.sh
 VOLUME /sys/fs/cgroup
 VOLUME /var2/run
