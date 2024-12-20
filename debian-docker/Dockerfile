@@ -10,7 +10,7 @@ WORKDIR /srv
 #COPY sources.list /etc/apt/sources.list
 #COPY gpt.txt .
 COPY files/docker/systemctl3.py /usr/bin/systemctl
-COPY ./webvirtcloud /srv/
+ADD ./webvirtcloud /srv/webvirtcloud
 
 #    && cat /app/gpt.txt | apt-key add - \
 RUN apt-get update \
