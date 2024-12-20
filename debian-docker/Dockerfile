@@ -37,7 +37,7 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup* \
     /lib/systemd/system/systemd-update-utmp*
 
-RUN apt-get update && apt-get install libvirt-daemon libvirt-clients libvirt-daemon-system virtinst bridge-utils virt-manager \
+RUN apt-get update && apt-get install -y libvirt-daemon libvirt-clients libvirt-daemon-system virtinst bridge-utils virt-manager \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
