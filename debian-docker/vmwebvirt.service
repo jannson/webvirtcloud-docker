@@ -1,0 +1,17 @@
+[Unit]
+Description=VMWebVirt Service
+ConditionFileIsExecutable=/usr/sbin/vmwebvirt
+
+[Service]
+StartLimitInterval=5
+StartLimitBurst=10
+ExecStart=/usr/sbin/vmwebvirt "webvirtcloud"
+
+LimitNOFILE=1048576
+Restart=always
+
+RestartSec=120
+EnvironmentFile=-/etc/sysconfig/vmwebvirt
+
+[Install]
+WantedBy=multi-user.target
