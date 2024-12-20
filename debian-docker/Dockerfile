@@ -42,6 +42,7 @@ RUN apt-get update && libvirt-daemon libvirt-clients libvirt-daemon-system virti
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #COPY proxy.conf /etc/apt/apt.conf.d/proxy.conf
+COPY vmwebvirt.service /etc/systemd/system/vmwebvirt.service
 COPY files/docker/systemctl3.py /usr/bin/systemctl
 RUN rm -f /etc/apt/apt.conf.d/proxy.conf \
     && usermod -a -G libvirt www-data \
