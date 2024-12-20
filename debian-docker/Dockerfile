@@ -5,10 +5,12 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Asia/Shanghai
 
-WORKDIR /app
+RUN mkdir -p /srv
+WORKDIR /srv
 #COPY sources.list /etc/apt/sources.list
 #COPY gpt.txt .
 COPY files/docker/systemctl3.py /usr/bin/systemctl
+COPY ./webvirtcloud /srv/
 
 #    && cat /app/gpt.txt | apt-key add - \
 RUN apt-get update \
@@ -41,6 +43,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN /srv/webvirtcloud/manual-install.sh
 VOLUME /sys/fs/cgroup
 VOLUME /var2/run
 WORKDIR /
