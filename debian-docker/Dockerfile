@@ -53,7 +53,12 @@ RUN rm -f /etc/apt/apt.conf.d/proxy.conf \
     && test -e /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl
 
 ADD ./webvirtcloud /srv/webvirtcloud
-RUN /srv/webvirtcloud/manual-install.sh
+#COPY ./webvirtcloud.conf /etc/supervisor/conf.d/
+#COPY ./py-auto-start.sh /srv/webvirtcloud/
+RUN /srv/webvirtcloud/manual-install.sh && systemctl enable supervisor \
+    && systemctl enable nginx \
+    && systemctl enable vmwebvirt.service
+
 VOLUME /sys/fs/cgroup
 VOLUME /var2/run
 WORKDIR /

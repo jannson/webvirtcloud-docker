@@ -1,4 +1,7 @@
-FROM linkease/webvirttest:0.1
+FROM linkease/webvirtcloud:0.8.1
 
-COPY vmwebvirt.service /etc/systemd/system/vmwebvirt.service
-
+COPY ./webvirtcloud.conf /etc/supervisor/conf.d/
+COPY ./py-auto-start.sh /srv/webvirtcloud/
+RUN systemctl enable supervisor \
+    && systemctl enable nginx \
+    && systemctl enable vmwebvirt.service
