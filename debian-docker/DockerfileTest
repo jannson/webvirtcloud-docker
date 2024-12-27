@@ -5,7 +5,7 @@ COPY ./py-auto-start.sh /srv/webvirtcloud/
 COPY ./vbios_gvt_uefi.rom /usr/share/OVMF/vbios_gvt_uefi.rom
 COPY ./OVMF_1.fd /usr/share/OVMF/OVMF_1.fd
 COPY ./OVMF_2.fd /usr/share/OVMF/OVMF_2.fd
-MV /usr/share/OVMF/OVMF_CODE_4M.fd /usr/share/OVMF/OVMF_CODE_4M_OLD.fd 
+RUN mv /usr/share/OVMF/OVMF_CODE_4M.fd /usr/share/OVMF/OVMF_CODE_4M_OLD.fd 
 COPY ./OVMF_2.fd /usr/share/OVMF/OVMF_CODE_4M.fd
 RUN systemctl enable supervisor \
     && systemctl enable nginx \
