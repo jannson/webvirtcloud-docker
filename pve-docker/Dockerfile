@@ -1,4 +1,4 @@
-FROM debian:bookworm-20241202 as builder1
+FROM debian:bookworm-20241202
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV container=docker
@@ -40,7 +40,11 @@ ARG qemu_server_ver=8.3.3
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends wget curl screen vim busybox openvswitch-switch &&\
     busybox --install &&\
-    systemctl set-default multi-user.target &&\
+    echo "#clean" &&\
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/*
+
+RUN systemctl set-default multi-user.target &&\
     echo "deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian/pve bookworm pve-no-subscription" > /etc/apt/sources.list.d/pve-no-subscription.list &&\
     wget https://mirrors.ustc.edu.cn/proxmox/debian/proxmox-release-bookworm.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bookworm.gpg &&\
     apt-get update &&\
@@ -94,4 +98,5 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 STOPSIGNAL SIGINT
-CMD ["/usr/bin/systemctl"]
+#CMD ["/usr/bin/systemctl"]
+CMD [ "/usr/bin/systemctl", "unit=sysinit.target"]
