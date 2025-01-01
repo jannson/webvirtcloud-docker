@@ -56,8 +56,7 @@ if [ "$istoreos" = "0" ]; then
     fi
   done
 else
-  i=pve-int
-  echo -e "\niface ${i} inet manual\n        ovs_type OVSBridge" >> /etc/network/interfaces
+  echo -e "\niface eth0 inet manual\n" >> /etc/network/interfaces
 fi
 
 [ -d "/host/var/run/openvswitch" ] && ln -s /host/var/run/openvswitch /var/run/ && echo "ln openvswitch"
