@@ -56,7 +56,9 @@ if [ "$istoreos" = "0" ]; then
     fi
   done
 else
-  echo -e "\niface eth0 inet manual\n" >> /etc/network/interfaces
+  if ! grep -iq "eth0" /etc/network/interfaces; then
+    echo -e "\niface eth0 inet manual\n" >> /etc/network/interfaces
+  fi
 fi
 
 [ -d "/host/var/run/openvswitch" ] && ln -s /host/var/run/openvswitch /var/run/ && echo "ln openvswitch"
