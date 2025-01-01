@@ -17,10 +17,11 @@ if [ -S "/host/var/run/vmease/daemon.sock" ]; then
   vmease_startup $vnet1 $vnet2
   while true; do
     if ip link show "$vnet2" > /dev/null 2>&1; then
-        break
+      ip link set $vnet2 up
+      break
     else
-        vmease_startup $vnet1 $vnet2
-        sleep 3
+      vmease_startup $vnet1 $vnet2
+      sleep 3
     fi
   done
 fi
