@@ -10,8 +10,6 @@ RUN echo 'APT::Get::Assume-Yes "1";' > /etc/apt/apt.conf.d/00-custom && \
     echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf.d/00-custom && \
     echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf.d/00-custom
 
-COPY files/docker/systemctl3.py /usr/bin/systemctl
-
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources &&\
     sed -i 's|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list.d/debian.sources &&\
     echo 'LANG=en_US.UTF-8' > /etc/default/locale &&\
@@ -38,7 +36,7 @@ ARG qemu_server_ver=8.3.3
 
 #openvswitch-switch is test
 RUN apt-get update &&\
-    apt-get install -y --no-install-recommends wget curl screen vim busybox openvswitch-switch &&\
+    apt-get install -y --no-install-recommends wget curl screen vim systemctl busybox openvswitch-switch &&\
     busybox --install &&\
     echo "#clean" &&\
     apt-get clean &&\
@@ -69,8 +67,6 @@ RUN hexdump -ve '1/1 "%.2X"' /usr/bin/pmxcfs > /usr/bin/pmxcfs.hex &&\
     chmod a+x /usr/bin/pmxcfs &&\
     rm -f /usr/bin/pmxcfs.hex
 
-COPY files/docker/systemctl3.py /usr/bin/systemctl
-COPY files/docker/journalctl3.py /usr/bin/journalctl
 COPY tools/pve-fake-subscription_0.0.9.deb /tmp/
 RUN dpkg -i /tmp/pve-fake-subscription_*.deb &&\
     rm -rf /tmp/pve-fake-subscription_*.deb &&\
@@ -84,12 +80,10 @@ RUN rm -rf /etc/apt/sources.list.d/pve-enterprise.list &&\
     echo "no HA" &&\
     systemctl mask pve-ha-lrm.service pve-ha-crm.service corosync &&\
     echo "no pvescheduler" &&\
-    systemctl mask pvescheduler.service
-
-RUN systemctl enable pvestatd.service &&\
+    systemctl mask pvescheduler.service &&\
+    systemctl enable pvestatd.service &&\
     systemctl enable pveproxy.service &&\
-    systemctl enable pvebanner.service &&\
-    test -e /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl
+    systemctl enable pvebanner.service
 
 VOLUME /var/lib/pve-cluster
 VOLUME /var/lib/vz
@@ -100,4 +94,4 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 STOPSIGNAL SIGINT
-CMD ["/usr/bin/systemctl"]
+CMD [ "/lib/systemd/systemd", "log-level=info", "unit=sysinit.target"]

@@ -56,8 +56,8 @@ if [ "$istoreos" = "0" ]; then
     fi
   done
 else
-  if ! grep -iq "eth0" /etc/network/interfaces; then
-    echo -e "\niface eth0 inet manual\n" >> /etc/network/interfaces
+  if ! grep -iq "pve-int" /etc/network/interfaces; then
+    echo -e "\niface pve-int inet manual\n        bridge-ports none\n        bridge-stp off\n        bridge-fd 0" >> /etc/network/interfaces
   fi
 fi
 
