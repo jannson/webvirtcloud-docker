@@ -98,5 +98,4 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 STOPSIGNAL SIGINT
-#CMD ["/usr/bin/systemctl"]
-CMD [ "/usr/bin/systemctl", "unit=sysinit.target"]
+CMD ["/usr/bin/systemctl"]
