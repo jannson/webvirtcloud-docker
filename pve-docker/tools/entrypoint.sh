@@ -17,6 +17,9 @@ if [ -S "/host/var/run/vmease/daemon.sock" ]; then
   vmease_startup $vnet1 $vnet2
   while true; do
     if ip link show "$vnet2" > /dev/null 2>&1; then
+      ip link add br-lan type bridge
+      ip link set $vnet2 master br-lan
+      ip link set br-lan up
       ip link set $vnet2 up
       break
     else
@@ -55,11 +58,13 @@ if [ "$istoreos" = "0" ]; then
         echo -e "\niface ${i} inet manual\n        ovs_type OVSBridge" >> /etc/network/interfaces
     fi
   done
-else
-  if ! grep -iq "pve-int" /etc/network/interfaces; then
-    echo -e "\niface pve-int inet manual\n        bridge-ports none\n        bridge-stp off\n        bridge-fd 0" >> /etc/network/interfaces
-  fi
 fi
+
+#else
+#  if ! grep -iq "pve-int" /etc/network/interfaces; then
+#    echo -e "\niface pve-int inet manual\n        bridge-ports none\n        bridge-stp off\n        bridge-fd 0" >> /etc/network/interfaces
+#  fi
+#fi
 
 [ -d "/host/var/run/openvswitch" ] && ln -s /host/var/run/openvswitch /var/run/ && echo "ln openvswitch"
 
