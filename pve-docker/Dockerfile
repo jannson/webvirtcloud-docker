@@ -91,8 +91,8 @@ RUN systemctl enable pvestatd.service &&\
     systemctl enable pvebanner.service &&\
     test -e /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl
 
-#VOLUME /var/lib/pve-cluster
-#VOLUME /var/lib/vz
+VOLUME /var/lib/pve-cluster
+VOLUME /var/lib/vz
 #VOLUME /etc/pve/qemu-server
 
 COPY tools/entrypoint.sh /
