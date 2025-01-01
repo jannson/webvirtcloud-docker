@@ -92,6 +92,7 @@ RUN systemctl enable pvestatd.service &&\
 
 VOLUME /var/lib/pve-cluster
 VOLUME /var/lib/vz
+VOLUME /etc/pve/qemu-server
 
 COPY tools/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
