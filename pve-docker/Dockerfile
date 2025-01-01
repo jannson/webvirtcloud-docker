@@ -70,6 +70,7 @@ RUN hexdump -ve '1/1 "%.2X"' /usr/bin/pmxcfs > /usr/bin/pmxcfs.hex &&\
     rm -f /usr/bin/pmxcfs.hex
 
 COPY files/docker/systemctl3.py /usr/bin/systemctl
+COPY files/docker/journalctl3.py /usr/bin/journalctl
 COPY tools/pve-fake-subscription_0.0.9.deb /tmp/
 RUN dpkg -i /tmp/pve-fake-subscription_*.deb &&\
     rm -rf /tmp/pve-fake-subscription_*.deb &&\
