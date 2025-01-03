@@ -9,11 +9,19 @@ vmease_startup() {
     "http://localhost/api/vmease/startup/vm/"
 }
 
-istoreos=0
-if [ -S "/host/var/run/vmease/daemon.sock" ]; then
+if [ "$ISTOREOS" = "1" ]; then
+  while true; do 
+    if [ -S "/host/var/run/vmease/daemon.sock" ]; then
+      echo "found daemon"
+      break
+    else
+      echo "waiting daemon"
+      sleep 5
+    fi 
+  done
+
   vnet1=pve-ext
   vnet2=pve-int
-  istoreos=1
   vmease_startup $vnet1 $vnet2
   while true; do
     if ip link show "$vnet2" > /dev/null 2>&1; then
@@ -49,7 +57,7 @@ if [ ! -z "$port" ]; then
 	# need patch pve-cluster/src/pmxcfs/pmxcfs.c
 fi
 
-if [ "$istoreos" = "0" ]; then
+if [ ! "$ISTOREOS" = "1" ]; then
   for i in `ip -o link show | awk -F': ' '{print $2}' |awk -F '@' '{print $1}'| grep -w -v 'lo' | grep -v '^docker' | grep -v '^br-'`;
   do
     if grep -iq "${i}" /etc/network/interfaces; then echo "${i} is exists"; continue; fi
