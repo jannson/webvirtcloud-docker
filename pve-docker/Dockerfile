@@ -91,6 +91,7 @@ VOLUME /var/lib/vz
 
 COPY tools/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+COPY ./CWWK.bin /usr/share/kvm/CWWK.bin
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 STOPSIGNAL SIGINT
